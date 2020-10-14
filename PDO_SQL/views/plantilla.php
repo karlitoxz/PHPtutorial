@@ -38,7 +38,7 @@
 						<a class="nav-link" href="index.php?pagina=ingreso">Ingreso</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="index.php?pagina=inico">Inicio</a>
+						<a class="nav-link active" href="index.php?pagina=inicio">Inicio</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="index.php?pagina=salir">Salir</a>
@@ -53,7 +53,22 @@
 	<div class="container py-5">
 
 		<?php
-			include "paginas/inicio.php";
+			if (isset($_GET['pagina'])) {
+				//echo $_GET['pagina'];
+				$pagina = $_GET['pagina'];
+
+					if ($pagina == "registro"||
+						$pagina == "ingreso"||
+						$pagina == "inicio"||
+						$pagina == "salir") {
+						include "paginas/".$pagina.".php";
+					}else{
+						include "paginas/registro.php";
+					} 
+			} else {
+				include "paginas/registro.php";
+			}
+			
 		?>
 
 	</div>
