@@ -1,5 +1,5 @@
 <?php
-#codigoImperativo.php
+#codigoImperativo o espagueti
 	#variables
 	$automovil1 = (object)["marca"=>"toyota","modelo"=>"corola"];
 	$automovil2 = (object)["marca"=>"Hyundai","modelo"=>"Acess"];
