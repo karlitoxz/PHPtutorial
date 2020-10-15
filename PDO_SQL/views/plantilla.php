@@ -31,7 +31,7 @@
 		<div class="container-fluid">
 			<div class="container">
 				<ul class="nav nav-justified py-2 nav-pills">
-					<?php if (isset($_GET['pagina'])): ?>
+					<?php if (isset($_GET['pagina']) && $_GET['pagina'] != ""): ?>
 
 						<?php if ($_GET['pagina'] == "registro"): ?>
 							<li class="nav-item">
@@ -111,7 +111,7 @@
 						$pagina == "salir") {
 						include "paginas/".$pagina.".php";
 					}else{
-						include "paginas/registro.php";
+						include "paginas/error404.php";
 					} 
 			} else {
 				include "paginas/registro.php";
