@@ -26,6 +26,19 @@
 				$stmt = null;
 
 			}
+
+
+		#Seleccionar Registros
+		static public function mdlSeleccionarRegistro($tabla){
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+			$stmt->close();
+			$stmt = null;
+		}
+
 	}
 
 ?>

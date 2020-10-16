@@ -1,7 +1,7 @@
 <?php 
 
 	class ControladorFormularios{
-		#Registro
+		#Guardar Registros
 
 		static public function ctrRegistro(){
 			if (isset($_POST['registroNombre'])) {
@@ -16,5 +16,13 @@
 			}
 			
 		}
+
+		#Seleccionar Registros
+		static public function ctrSeleccionarRegistro(){
+			$tabla = "registros";
+			$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla);
+			return $respuesta;
+		}
+
 	}
  ?>
