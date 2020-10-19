@@ -36,6 +36,7 @@
 					$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
 
 					if($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"] ){
+						$_SESSION["validarIngreso"] = 'ok';
 						echo '<div class="alert alert-success">Ingreso Exitoso</div>';
 						echo "<script>window.location = 'index.php?pagina=inicio'</script>";
 					}else{
