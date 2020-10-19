@@ -18,9 +18,9 @@
 		}
 
 		#Seleccionar Registros
-		static public function ctrSeleccionarRegistro(){
+		static public function ctrSeleccionarRegistro($item,$valor){
 			$tabla = "registros";
-			$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla,null,null);
+			$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
 			//print_r($respuesta);
 			return $respuesta;
 		}
@@ -49,5 +49,36 @@
 				}	
 			}
 
+		#Actualizar registro:
+			public function crtActualizarRegistro(){
+
+				if (isset($_POST['actualizarNombre'])) {
+					
+					if ($_POST['actualizarNombre'] != "") {
+						$password = $_POST['actualizarNombre'];
+					}else{
+						$password = $_POST['passwordActual'];
+					}
+
+
+
+					$tabla = "registros";
+					$datos = array(
+						"id"=>$_POST['idUsuario'],
+						"nombre"=>$_POST['actualizarNombre'],
+						"email"=>$_POST['actualizarEmail'],
+						"password"=>$password);
+					$respuesta = ModeloFormularios::mdlActualizar($tabla,$datos);
+					if ($respuesta = 'ok') {
+						echo "<div class='alert alert-success'>El usuario a sido actualizado</div>";
+						#Borrar cache añadiendo un javaScript
+						echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
+					}
+				} else {
+					return "No existe la variable";
+				}
+			}
+
 	}
  ?>
+

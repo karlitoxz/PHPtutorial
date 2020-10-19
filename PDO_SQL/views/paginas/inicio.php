@@ -9,8 +9,12 @@
 			echo "<script>window.location = 'index.php?pagina=ingreso'</script>";
 			return;
 	}
-	$usuarios = ControladorFormularios::ctrSeleccionarRegistro();
+	$usuarios = ControladorFormularios::ctrSeleccionarRegistro(null,null);
 	/*echo '<pre>';print_r($usuarios);echo '<pre>';*/
+
+
+
+	
 ?>
 <table class="table table-striped">
 	<thead>
@@ -33,8 +37,8 @@
 				<td><?php echo $value["fecha"]; ?></td>
 				<td>
 					<div class="btn-group">
-						<button class="btn btn-warning"><i class="fas fa-pencil-ruler"></i></button>
-						<button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+						<a href="index.php?pagina=editar&id=<?php echo $value['id']; ?>" class="btn btn-warning"><i class="fas fa-pencil-ruler"></i></a>
+						<button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 
 					</div>
 				</td>

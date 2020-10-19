@@ -109,6 +109,7 @@
 					if ($pagina == "registro"||
 						$pagina == "ingreso"||
 						$pagina == "inicio"||
+						$pagina == "editar"||
 						$pagina == "salir") {
 						include "paginas/".$pagina.".php";
 					}else{
