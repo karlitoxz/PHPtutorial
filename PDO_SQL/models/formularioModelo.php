@@ -30,7 +30,7 @@
 
 		#Seleccionar Registros
 		static public function mdlSeleccionarRegistro($tabla){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT *,date_format(fecha,'%d/%m/%Y') AS fecha FROM $tabla ORDER BY id DESC");
 			$stmt->execute();
 
 			return $stmt->fetchAll();
