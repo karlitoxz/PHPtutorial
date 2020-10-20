@@ -1,8 +1,8 @@
 <?php 
-	if (isset($_GET['id'])) {
+	if (isset($_GET['token'])) {
 		
-		$item = 'id';
-		$valor = $_GET['id'];
+		$item = 'token';
+		$valor = $_GET['token'];
 		$usuario = ControladorFormularios::ctrSeleccionarRegistro($item, $valor);
 		/*print_r($usuario);*/
 	}
@@ -43,7 +43,7 @@
 				<input type="password" class="form-control" placeholder="Enter Password" id="pwd" name="actualizarPassword">
 
 				<input type="hidden" name="passwordActual" value="<?php echo $usuario['password'] ?>">
-				<input type="hidden" name="idUsuario" value="<?php echo $usuario['id'] ?>">
+				<input type="hidden" name="tokenUsuario" value="<?php echo $usuario['token'] ?>">
 			</div>
 
 		</div>

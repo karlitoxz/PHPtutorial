@@ -8,10 +8,10 @@
 			static public function mdlRegistro($tabla,$datos){
 
 				#statement-declaracion
-				$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, email, password) VALUES (:nombre, :email, :password)");
+				$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (token, nombre, email, password) VALUES (:token, :nombre, :email, :password)");
 
 				#bindParam vincula parametros a variables->envitar injeciones SQL
-
+				$stmt->bindParam(":token",$datos["token"],PDO::PARAM_STR);
 				$stmt->bindParam(":nombre",$datos["nombre"],PDO::PARAM_STR);
 				$stmt->bindParam(":email",$datos["email"],PDO::PARAM_STR);
 				$stmt->bindParam(":password",$datos["password"],PDO::PARAM_STR);
@@ -56,12 +56,12 @@
 		#Actualizar registros
 			static public function mdlActualizar($tabla,$datos){
 				#statement-declaracion
-				$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre=:nombre,email=:email,password=:password WHERE id = :id");
+				$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre=:nombre,email=:email,password=:password WHERE token = :token");
 
 				$stmt->bindParam(":nombre",$datos["nombre"],PDO::PARAM_STR);
 				$stmt->bindParam(":email",$datos["email"],PDO::PARAM_STR);
 				$stmt->bindParam(":password",$datos["password"],PDO::PARAM_STR);
-				$stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+				$stmt->bindParam(":token",$datos["token"],PDO::PARAM_STR);
 
 				#ejecutar la sentencia
 				if ($stmt->execute()) {
@@ -79,9 +79,9 @@
 			
 			static public function mdleliminarRegistro($tabla,$valor){
 				#statement-declaracion
-				$stmt = Conexion::conectar()->prepare("DELETE from $tabla WHERE id = :id");
+				$stmt = Conexion::conectar()->prepare("DELETE from $tabla WHERE token = :token");
 
-				$stmt->bindParam(":id",$valor,PDO::PARAM_STR);
+				$stmt->bindParam(":token",$valor,PDO::PARAM_STR);
 
 				#ejecutar la sentencia
 				if ($stmt->execute()) {

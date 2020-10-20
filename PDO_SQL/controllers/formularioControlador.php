@@ -11,7 +11,11 @@
 					preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i', $_POST['registroEmail'])) {
 					
 					$tabla = "registros";
-					$datos = array("nombre"=>$_POST['registroNombre'],
+
+					$token = md5($_POST['registroNombre']."+".$_POST['registroEmail']);
+
+					$datos = array("token"=>$token,
+									"nombre"=>$_POST['registroNombre'],
 									"email"=>$_POST['registroEmail'],
 									"password"=>$_POST['registroPassword']);
 					$respuesta = ModeloFormularios::mdlRegistro($tabla,$datos);
@@ -68,46 +72,72 @@
 		#Actualizar registro:
 			public function crtActualizarRegistro(){
 
-				if (isset($_POST['actualizarNombre'])) {
-					
-					if ($_POST['actualizarNombre'] != "") {
-						$password = $_POST['actualizarNombre'];
-					}else{
-						$password = $_POST['passwordActual'];
+					if (isset($_POST['actualizarNombre'])) {
+
+						$tabla="registros";
+						$item="token";
+						$valor=$_POST['tokenUsuario'];
+
+						#traer datos del usuario para comparar el token:
+						$usuario = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
+
+						$compararToken = md5($usuario['nombre']."+".$usuario['email']);
+
+						if ($compararToken == $valor) {
+							
+									if ($_POST['actualizarNombre'] != "") {
+										$password = $_POST['actualizarPassword'];
+									}else{
+										$password = $_POST['passwordActual'];
+									}
+
+
+								$datos = array(
+									"token"=>$_POST['tokenUsuario'],
+									"nombre"=>$_POST['actualizarNombre'],
+									"email"=>$_POST['actualizarEmail'],
+									"password"=>$password);
+								$respuesta = ModeloFormularios::mdlActualizar($tabla,$datos);
+
+								if ($respuesta = 'ok') {
+									echo "<div class='alert alert-success'>El usuario a sido actualizado</div>";
+									#Borrar cache añadiendo un javaScript
+									echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
+									#Reenvio despues de un tiempo en javaScript
+									echo "<script>setTimeout(function(){window.location = 'index.php?pagina=inicio';},3000);</script>";
+							}
+					} else {
+						echo "<div class='alert alert-danger'>Error, el usuario NO ha sido actualizado</div>";
 					}
 
-
-
-					$tabla = "registros";
-					$datos = array(
-						"id"=>$_POST['idUsuario'],
-						"nombre"=>$_POST['actualizarNombre'],
-						"email"=>$_POST['actualizarEmail'],
-						"password"=>$password);
-					$respuesta = ModeloFormularios::mdlActualizar($tabla,$datos);
-					if ($respuesta = 'ok') {
-						echo "<div class='alert alert-success'>El usuario a sido actualizado</div>";
-						#Borrar cache añadiendo un javaScript
-						echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
-						#Reenvio despues de un tiempo en javaScript
-						echo "<script>setTimeout(function(){window.location = 'index.php?pagina=inicio';},3000);</script>";
-					}
-				} else {
-					return "No existe la variable";
 				}
+
+
+
+					
+					
 			}
 
 		#Eliminar Registro
 
 			public function ctrEliminarRegistro(){
 				if (isset($_POST['eliminarRegistro'])) {
-						$tabla = "registros";
-						$valor = $_POST['eliminarRegistro'];
-						$respuesta = ModeloFormularios::mdleliminarRegistro($tabla,$valor);
-						if ($respuesta == 'ok') {
-							echo "<script>window.location = 'index.php?pagina=inicio'</script>";
-						}						
-					return $respuesta;
+
+						$tabla="registros";
+						$item="token";
+						$valor=$_POST['eliminarRegistro'];
+						#traer datos del usuario para comparar el token:
+						$usuario = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
+						$compararToken = md5($usuario['Nombre']."+".$usuario['email']);
+
+
+						if ($compararToken == $valor) {
+								$respuesta = ModeloFormularios::mdleliminarRegistro($tabla,$valor);
+								if ($respuesta == 'ok') {
+									echo "<script>window.location = 'index.php?pagina=inicio'</script>";
+								}						
+							return $respuesta;
+						}	
 				}
 
 			}
