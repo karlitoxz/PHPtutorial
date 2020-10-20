@@ -38,7 +38,18 @@
 				<td>
 					<div class="btn-group">
 						<a href="index.php?pagina=editar&id=<?php echo $value['id']; ?>" class="btn btn-warning"><i class="fas fa-pencil-ruler"></i></a>
-						<button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+						<form method="POST">
+							<input type="hidden" value="<?php echo $value['id']; ?>" name="eliminarRegistro">
+							<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+						</form>
+
+						<?php 
+
+							$eliminar = new ControladorFormularios();
+							$eliminar ->ctrEliminarRegistro();
+
+						?>
+						
 
 					</div>
 				</td>

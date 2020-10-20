@@ -73,10 +73,27 @@
 						echo "<div class='alert alert-success'>El usuario a sido actualizado</div>";
 						#Borrar cache añadiendo un javaScript
 						echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
+						#Reenvio despues de un tiempo en javaScript
+						echo "<script>setTimeout(function(){window.location = 'index.php?pagina=inicio';},3000);</script>";
 					}
 				} else {
 					return "No existe la variable";
 				}
+			}
+
+		#Eliminar Registro
+
+			public function ctrEliminarRegistro(){
+				if (isset($_POST['eliminarRegistro'])) {
+						$tabla = "registros";
+						$valor = $_POST['eliminarRegistro'];
+						$respuesta = ModeloFormularios::mdleliminarRegistro($tabla,$valor);
+						if ($respuesta == 'ok') {
+							echo "<script>window.location = 'index.php?pagina=inicio'</script>";
+						}						
+					return $respuesta;
+				}
+
 			}
 
 	}

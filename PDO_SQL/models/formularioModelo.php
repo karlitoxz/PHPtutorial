@@ -75,6 +75,27 @@
 
 			}
 
+		#Eliminar Registro:
+			
+			static public function mdleliminarRegistro($tabla,$valor){
+				#statement-declaracion
+				$stmt = Conexion::conectar()->prepare("DELETE from $tabla WHERE id = :id");
+
+				$stmt->bindParam(":id",$valor,PDO::PARAM_STR);
+
+				#ejecutar la sentencia
+				if ($stmt->execute()) {
+					return "ok";
+				} else {
+					print_r(Conexion::conectar()->errorInfo());
+				}
+
+				$stmt->close();
+				$stmt = null;
+
+			}
+
+
 	}
 
 ?>
