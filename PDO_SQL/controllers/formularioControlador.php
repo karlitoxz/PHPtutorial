@@ -54,15 +54,31 @@
 					$valor = $_POST["ingresoEmail"];
 
 					$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
+					/*print_r($respuesta);*/
 
 					if($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"] ){
 						$_SESSION["validarIngreso"] = 'ok';
+
+						#Reiniciar intentos fallidos:
+						ModeloFormularios:: mdlActualizarIntentosFallidos($tabla,0,$respuesta["token"]);
+
 						echo '<div class="alert alert-success">Ingreso Exitoso</div>';
 						echo "<script>window.location = 'index.php?pagina=inicio'</script>";
 					}else{
-					#Borrar cache añadiendo un javaScript
-				echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
-				echo '<div class="alert alert-danger">Error al ingresar al sistema.</div>';
+
+						if ($respuesta["intentos_fallidos"] < 5) {
+							#Guardar intentos fallidos de login:
+								$i_f = $respuesta["intentos_fallidos"]+1;
+								$actIntentosFallidos =  ModeloFormularios:: mdlActualizarIntentosFallidos($tabla,$i_f,$respuesta["token"]);
+									print_r($i_f);
+						}else{
+
+							echo '<div class="alert alert-warning">Debes validar que no eres un robot ReCatcha</div>';
+						}
+
+							#Borrar cache añadiendo un javaScript
+						echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
+						echo '<div class="alert alert-danger">Error al ingresar al sistema.</div>';
 					}
 
 					/*echo "<br>".print_r($respuesta)."<br>";*/
