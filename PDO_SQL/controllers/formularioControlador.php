@@ -14,10 +14,13 @@
 
 					$token = md5($_POST['registroNombre']."+".$_POST['registroEmail']);
 
+					#Encriptar el password:
+					$encriptarPassword = crypt($_POST['registroPassword'],'$2a$07$usesomesillystringforsalt$');
+
 					$datos = array("token"=>$token,
 									"nombre"=>$_POST['registroNombre'],
 									"email"=>$_POST['registroEmail'],
-									"password"=>$_POST['registroPassword']);
+									"password"=>$encriptarPassword);
 					$respuesta = ModeloFormularios::mdlRegistro($tabla,$datos);
 
 					return $respuesta;
@@ -56,7 +59,10 @@
 					$respuesta = ModeloFormularios::mdlSeleccionarRegistro($tabla,$item,$valor);
 					/*print_r($respuesta);*/
 
-					if($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $_POST["ingresoPassword"] ){
+					#Encriptar el password:
+					$encriptarPassword = crypt($_POST["ingresoPassword"],'$2a$07$usesomesillystringforsalt$');
+
+					if($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["password"] == $encriptarPassword ){
 						$_SESSION["validarIngreso"] = 'ok';
 
 						#Reiniciar intentos fallidos:
@@ -102,11 +108,13 @@
 						if ($compararToken == $valor) {
 							
 									if ($_POST['actualizarNombre'] != "") {
-										$password = $_POST['actualizarPassword'];
+										#Encriptar el password:
+										$password = crypt($_POST['actualizarPassword'],'$2a$07$usesomesillystringforsalt$');
 									}else{
 										$password = $_POST['passwordActual'];
 									}
 
+								
 
 								$datos = array(
 									"token"=>$_POST['tokenUsuario'],

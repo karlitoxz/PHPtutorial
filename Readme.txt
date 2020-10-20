@@ -38,3 +38,8 @@ https://www.youtube.com/watch?v=-KafvnlaU08
 		para evitar: PHP preg_match()
 					 bindParam()
 
+	Encriptar password:
+		PHP:crypt y salt
+			crypt_blowfish
+			https://www.php.net/manual/en/function.crypt.php
+
