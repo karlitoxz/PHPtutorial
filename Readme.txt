@@ -23,6 +23,7 @@ Recursos:
 
 
 Segurida informatica:
+https://www.youtube.com/watch?v=-KafvnlaU08
 	XSS:
 		<script>alert("hacked")</script>
 		<script>setInterval(function(){alert("hacked")},1000)</script>
@@ -32,3 +33,8 @@ Segurida informatica:
 	CSRF:
 		alterar un link que contenga un enlace y cambiar datos como el ID.
 		Solucion TOKEN:elementos encriptados. (MD5)
+
+	SQL injection:
+		para evitar: PHP preg_match()
+					 bindParam()
+
