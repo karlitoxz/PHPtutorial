@@ -8,5 +8,5 @@
 	$plantilla -> ctrTraerPlantilla();
 
 
-
-?>
+#se comenta el final de php para evitar que adjunten script de javaScript
+/*?>*/

@@ -4,15 +4,31 @@
 		#Guardar Registros
 
 		static public function ctrRegistro(){
+
 			if (isset($_POST['registroNombre'])) {
-				$tabla = "registros";
-				$datos = array("nombre"=>$_POST['registroNombre'],
-								"email"=>$_POST['registroEmail'],
-								"password"=>$_POST['registroPassword']);
-				$respuesta = ModeloFormularios::mdlRegistro($tabla,$datos);
-				return $respuesta;
+					#Expresion regular para permitir caracteres
+				if (preg_match('/^[a-zA-ZáéíóúñÁÉÍÓÚÑ ]+$/', $_POST['registroNombre']) &&
+					preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i', $_POST['registroEmail'])) {
+					
+					$tabla = "registros";
+					$datos = array("nombre"=>$_POST['registroNombre'],
+									"email"=>$_POST['registroEmail'],
+									"password"=>$_POST['registroPassword']);
+					$respuesta = ModeloFormularios::mdlRegistro($tabla,$datos);
+
+					return $respuesta;
+
+
+				} else {
+					$respuesta = "error";
+					return $respuesta;
+				}
+				
+
 			} else {
+
 				return "No existe la variable";
+
 			}
 			
 		}

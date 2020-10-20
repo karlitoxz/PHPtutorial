@@ -49,6 +49,13 @@
 			} else {
 				/*echo '<div class="alert alert-warning">El usuario NO a sido registrado</div>';*/
 			}
+
+			if ($registro == "error") {
+				#Borrar cache añadiendo un javaScript
+				echo "<script>if(window.history.replaceState){window.history.replaceState(null, null, window.location.href);} </script>";
+				echo '<div class="alert alert-danger">Error, no se permiten caracteres especiales</div>';
+			}
+			
 			
 
 

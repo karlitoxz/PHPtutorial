@@ -20,3 +20,11 @@ Recursos:
 		https://www.w3schools.com/sql/
 	Iconos:
 		https://fontawesome.com/
+
+
+Segurida informatica:
+	XSS:
+		<script>alert("hacked")</script>
+		<script>setInterval(function(){alert("hacked")},1000)</script>
+
+		para evitar: PHP preg_match
